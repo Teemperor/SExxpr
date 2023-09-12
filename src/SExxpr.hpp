@@ -3,7 +3,9 @@
 
 #include <cassert>
 #include <cstdint>
+#include <iomanip>
 #include <istream>
+#include <limits>
 #include <optional>
 #include <sstream>
 #include <string>
@@ -106,7 +108,9 @@ struct Expr {
     switch (getKind()) {
     case Kind::Float: {
       std::ostringstream ss;
-      ss << getFloatValue();
+      // Make sure we print all available digits.
+      const auto digits = std::numeric_limits<decltype(floatValue)>::digits10;
+      ss << std::setprecision(digits) << getFloatValue();
 
       std::string buffer = ss.str();
       if (buffer.find('.') == std::string::npos &&

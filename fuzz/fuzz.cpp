@@ -13,11 +13,10 @@ static bool isEqual(const SExxpr::Expr &lhs, const SExxpr::Expr &rhs) {
 
   switch (lhs.getKind()) {
   case SExxpr::Expr::Kind::Float: {
-    std::string lhsStr = std::to_string(lhs.getFloatValue());
-    std::string rhsStr = std::to_string(rhs.getFloatValue());
-    lhsStr.resize(4);
-    rhsStr.resize(4);
-    return lhsStr == rhsStr;
+    double offByPercent =
+        std::abs(lhs.getFloatValue() / rhs.getFloatValue() - 1);
+    double offBy = std::abs(lhs.getFloatValue() - rhs.getFloatValue());
+    return offBy < 0.1 || offByPercent < 0.1;
   }
   case SExxpr::Expr::Kind::List: {
     if (lhs.size() != rhs.size())
