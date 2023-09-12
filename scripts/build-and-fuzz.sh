@@ -11,4 +11,4 @@ cd build-fuzz
 
 cmake -DCMAKE_BUILD_TYPE=RelWithDbgInfo -GNinja ..
 ninja
-./fuzz/parse-fuzzer -print_pcs=1 -timeout=10 -max_len=20000
+./fuzz/parse-fuzzer -timeout=60 -max_len=20000 "$@"

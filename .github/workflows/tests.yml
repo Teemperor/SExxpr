@@ -30,3 +30,7 @@ jobs:
     - name: Run tests (Clang)
       run: |
         CXX=clang++ ./scripts/build-and-test.sh
+
+    - name: Smoke test fuzz (Clang)
+      run: |
+        CXX=clang++ ./scripts/build-and-fuzz.sh -runs=100000
