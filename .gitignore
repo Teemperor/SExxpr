@@ -1,6 +1,6 @@
 rel
 dbg
-build*
-build
+build-*/
+build/
 .vscode
 *.user
