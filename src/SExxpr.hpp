@@ -7,6 +7,7 @@
 #include <optional>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <variant>
 #include <vector>
 
