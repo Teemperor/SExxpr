@@ -1,0 +1,29 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essentials clang ninja-build build-essential
+    - name: Run tests (GCC)
+      run: |
+        CXX=g++ ./scripts/build-and-test.sh
+
+    - name: Run tests (Clang)
+      run: |
+        CXX=clang++ ./scripts/build-and-test.sh

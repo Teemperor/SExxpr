@@ -1,0 +1,6 @@
+rel
+dbg
+build*
+build
+.vscode
+*.user
