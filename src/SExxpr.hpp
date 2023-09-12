@@ -109,7 +109,9 @@ struct Expr {
       ss << getFloatValue();
 
       std::string buffer = ss.str();
-      if (buffer.find('.') == std::string::npos)
+      if (buffer.find('.') == std::string::npos &&
+          buffer.find("e+") == std::string::npos &&
+          buffer.find("e-") == std::string::npos)
         buffer += ".";
       out << buffer;
       break;
@@ -135,8 +137,10 @@ struct Expr {
       break;
     case Kind::List: {
       out << " ( ";
-      for (const Expr &child : *this)
+      for (const Expr &child : *this) {
+        out << " ";
         child.dump(out);
+      }
       out << " ) ";
       break;
     }
@@ -307,19 +311,15 @@ private:
     }
 
     try {
-      if (contents.find('.') == std::string::npos) {
-        std::size_t end = 0;
-        std::int64_t parsed = std::stoll(contents.data(), &end, /*base*/ 0);
-        if (end != contents.size())
-          return error("Failed to parse integer: " + contents);
-        return Expr::Integer(parsed);
-      }
-
       std::size_t end = 0;
-      double parsed = std::stod(contents.data(), &end);
+      std::int64_t parsedInt = std::stoll(contents.data(), &end, /*base*/ 0);
+      if (end == contents.size())
+        return Expr::Integer(parsedInt);
+
+      double parsedFloat = std::stod(contents, &end);
       if (end != contents.size())
         return error("Failed to parse float: " + contents);
-      return Expr::Float(parsed);
+      return Expr::Float(parsedFloat);
     } catch (const std::invalid_argument &e) {
       return error("Invalid float/int value: " + contents);
     } catch (const std::out_of_range &e) {

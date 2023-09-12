@@ -13,10 +13,11 @@ static bool isEqual(const SExxpr::Expr &lhs, const SExxpr::Expr &rhs) {
 
   switch (lhs.getKind()) {
   case SExxpr::Expr::Kind::Float: {
-    float diff = lhs.getFloatValue() - rhs.getFloatValue();
-    // FIXME: This could be done more reliable with float steps, but this is
-    // good enough for fuzzing.
-    return std::abs(diff) < 0.01;
+    std::string lhsStr = std::to_string(lhs.getFloatValue());
+    std::string rhsStr = std::to_string(rhs.getFloatValue());
+    lhsStr.resize(4);
+    rhsStr.resize(4);
+    return lhsStr == rhsStr;
   }
   case SExxpr::Expr::Kind::List: {
     if (lhs.size() != rhs.size())
@@ -58,6 +59,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, std::size_t Size) {
   auto secondParsed = secondParser.parseTopLevel();
   if (secondParsed.isError()) {
     std::cerr << "failed to parse dumped output: '" << dumped << "'\n";
+    std::cerr << "Error: " << secondParsed.getError().format() << "\n";
     abort();
   }
 
