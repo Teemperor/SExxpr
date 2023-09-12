@@ -20,6 +20,9 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential clang ninja-build build-essential
+        git submodule init
+        git submodule update
+
     - name: Run tests (GCC)
       run: |
         CXX=g++ ./scripts/build-and-test.sh
