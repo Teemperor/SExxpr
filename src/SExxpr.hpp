@@ -56,6 +56,11 @@ struct Expr {
   }
 
   Kind getKind() const { return kind; }
+  bool isString() const { return kind == Kind::String; }
+  bool isSymbol() const { return kind == Kind::Symbol; }
+  bool isList() const { return kind == Kind::List; }
+  bool isInteger() const { return kind == Kind::Integer; }
+  bool isFloat() const { return kind == Kind::Float; }
 
   auto begin() {
     assertIsKind(Kind::List);
