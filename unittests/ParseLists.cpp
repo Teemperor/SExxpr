@@ -7,6 +7,12 @@ TEST(TestParseStrings, Basic) {
   EXPECT_EQ(parse("(a b)"), Expr::List({Expr::Symbol("a"), Expr::Symbol("b")}));
 }
 
+TEST(TestParseStrings, Nested) {
+  EXPECT_EQ(parse("((a))"), Expr::List({Expr::List({Expr::Symbol("a")})}));
+  EXPECT_EQ(parse("((a b))"),
+            Expr::List({Expr::List({Expr::Symbol("a"), Expr::Symbol("b")})}));
+}
+
 TEST(TestParseStrings, Whitespace) {
   EXPECT_EQ(parse("( a )"), Expr::List({Expr::Symbol("a")}));
   EXPECT_EQ(parse("(a  b)"),
