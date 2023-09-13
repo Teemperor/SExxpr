@@ -154,6 +154,12 @@ struct Expr {
     }
   }
 
+  std::string toString() const {
+    std::ostringstream oss;
+    dump(oss);
+    return oss.str();
+  }
+
 private:
   auto tie() const {
     return std::tie(kind, str, children, intValue, floatValue);

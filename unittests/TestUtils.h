@@ -26,7 +26,10 @@ inline Expr parse(std::string str) {
 inline std::string print(Expr e) {
   std::ostringstream ss;
   e.dump(ss);
-  return ss.str();
+  const std::string result = ss.str();
+  // Check that dumping always produces the same result as printing as a string.
+  assert(result == e.toString());
+  return result;
 }
 
 #endif
