@@ -7,4 +7,5 @@ TEST(TestParseSymbols, Basic) {
 
 TEST(TestParseSymbols, WithWeirdChars) {
   EXPECT_EQ(parse(R"(a")"), Expr::Symbol("a\""));
+  EXPECT_EQ(parse(R"(-)"), Expr::Symbol("-"));
 }

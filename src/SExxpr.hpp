@@ -325,6 +325,10 @@ private:
       contents.push_back(next);
     }
 
+    // Special case: '-' is a symbol for us.
+    if (contents == "-")
+      return Expr::Symbol(contents);
+
     try {
       std::size_t end = 0;
       std::int64_t parsedInt = std::stoll(contents.data(), &end, /*base*/ 0);
