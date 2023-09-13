@@ -319,10 +319,10 @@ private:
         break;
       if (peekIsWhitespace())
         break;
-      const char next = pop();
+      const char next = peek();
       if (next == ')')
         break;
-      contents.push_back(next);
+      contents.push_back(pop());
     }
 
     // Special case: '-' is a symbol for us.
